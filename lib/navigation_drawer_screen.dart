@@ -9,9 +9,12 @@ class NavigationDrawerScreen extends StatefulWidget {
 }
 
 class _NavigationDrawerScreenState extends State<NavigationDrawerScreen> {
+  final _messengerKey = GlobalKey<ScaffoldMessengerState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: _messengerKey,
       home: Scaffold(
         appBar: AppBar(),
         drawer: Drawer(
@@ -19,7 +22,7 @@ class _NavigationDrawerScreenState extends State<NavigationDrawerScreen> {
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.blue,
                 ),
                 child: Container(
@@ -28,13 +31,14 @@ class _NavigationDrawerScreenState extends State<NavigationDrawerScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                      Container(
-                      height: 100,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(50.0))),
-                      child: SvgPicture.network("https://upload.wikimedia.org/wikipedia/commons/4/44/Google-flutter-logo.svg"),
-                      ),
+                        Container(
+                          height: 100,
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50.0))),
+                          child: SvgPicture.network(
+                              "https://upload.wikimedia.org/wikipedia/commons/4/44/Google-flutter-logo.svg"),
+                        ),
                         Text("Навигация во Flutter"),
                       ],
                     )),
@@ -42,17 +46,36 @@ class _NavigationDrawerScreenState extends State<NavigationDrawerScreen> {
               ListTile(
                 leading: Icon(Icons.one_k),
                 title: Text('Каталог'),
-                onTap: () {},
+                onTap: () {
+                  _messengerKey.currentState!.showSnackBar(
+                      const SnackBar(content: Text("Переход в каталог")));
+                },
               ),
               ListTile(
                 leading: Icon(Icons.two_k),
                 title: Text('Корзина'),
-                onTap: () {},
+                onTap: () {
+                  _messengerKey.currentState!.showSnackBar(
+                      const SnackBar(content: Text("Переход в корзину")));
+                },
+              ),
+              const Divider(),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Text("Профиль"),
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Настройки'),
+                onTap: () {
+                  _messengerKey.currentState!.showSnackBar(
+                      const SnackBar(content: Text("Переход в настройки")));
+                },
               )
             ],
           ),
         ),
-        body: Center(
+        body: const Center(
           child: Text("Содержимое экрана"),
         ),
       ),
